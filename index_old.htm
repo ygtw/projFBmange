@@ -1,0 +1,190 @@
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style>
+body , a 
+{
+TEXT-DECORATION:none;
+
+}
+
+</style>
+
+<h2> 我的塗鴉牆管家 v0.1</h2>
+
+
+要找讚大於多少的貼文?
+<input type="text" width="50px" id="input_Flike"/>
+<input type="button" value="ok" onclick="Flike=document.getElementById('input_Flike').value   ; document.getElementById('sysmsg').innerHTML='爬牆中...'; 
+document.getElementById('sample_Div').innerHTML='';
+getwall(); " />
+
+<div id="fb-root"></div>
+
+
+<div id="sample_Div">
+</div>
+
+<div id="sysmsg">
+
+</div>
+
+
+
+
+
+<script>
+
+var uid,username;
+var Flike = 10;
+
+  window.fbAsyncInit = function() {
+    FB.init({
+      appId      : '233574123367349', // App ID
+    //  channelURL : 'channel.html', // Channel File
+      status     : true, // check login status
+      cookie     : true, // enable cookies to allow the server to access the session
+      oauth      : true, // enable OAuth 2.0
+      xfbml      : true  // parse XFBML
+    });
+
+    // Additional initialization code here
+	   
+   
+    FB.login(function(response) {
+   if (response.authResponse) {
+     console.log('Welcome!  Fetching your information.... ');
+	 
+	 
+	 
+	  FB.api('/me', function(response) {
+       console.log(response);
+    //   console.log( FBquery( response.id ) );
+		uid = response['id'];
+		username = response['username'];
+     });
+	 
+	 
+	 
+	 
+/*
+	var keep = 3;
+	while(  keep>1 )
+	{	
+
+
+		     console.log(keep); 
+	}   
+
+	*/
+
+
+	//getwall('')
+	   
+   
+   
+   } else {
+     console.log('User cancelled login or did not fully authorize.');
+   }
+ }, {scope: 'user_status,read_stream,publish_stream'});
+ 
+ 
+
+ 	
+ 
+  };
+
+  // Load the SDK Asynchronously
+  (function(d){
+     var js, id = 'facebook-jssdk'; if (d.getElementById(id)) {return;}
+     js = d.createElement('script'); js.id = id; js.async = true;
+     js.src = "//connect.facebook.net/en_US/all.js";
+     d.getElementsByTagName('head')[0].appendChild(js);
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+   }(document));
+   
+
+
+function getwall(until)
+{
+
+
+		 FB.api( '/me/feed?limit=100&'+until , function(response2) {
+		   console.log(response2);
+		//   console.log( FBquery( response.id ) );
+			parser(response2);
+			if(response2['paging']['next']) getwall(response2['paging']['next'].substring( response2['paging']['next'].indexOf('until') , response2['paging']['next'].length ))
+			else
+			{
+				document.getElementById('sysmsg').innerHTML="完成!";
+			}
+			
+		//	else keep=0;	console.log(response2['paging']['previous'].substring( response2['paging']['previous'].indexOf('since') , response2['paging']['previous'].length ));
+		 });
+
+}   
+function parser(response) {
+   //    console.log(response);
+    //   console.log( FBquery( response.id ) );
+
+		for(var key in response['data']){
+				//	console.log(response['data'][key]);
+			if( ! response['data'][key]['likes']  ||  response['data'][key]['likes']['count']<Flike) continue
+		 
+			 
+			 
+				
+			
+			 var start  =  response['data'][key]['id'].indexOf('_')+1;
+			 var pid = response['data'][key]['id'].substring(start , response['data'][key]['id'].length );
+			 
+			 
+			 var temp = document.getElementById('sample_Div');
+			 var msg = response['data'][key]['message']
+			 
+			 var link = "http://www.facebook.com/"+ username + "/posts/"+ pid ;
+				temp.innerHTML  = temp.innerHTML + 
+				 response['data'][key]['likes']['count'] +'<img src="like.jpg" width="30" /> '+ '<a href='+link+'  target="_blank">'+ msg   +'</a>'+'<hr>' ;
+		
+		}
+	   
+     }
+   
+   function jsonToString(obj){
+    	var THIS = this; 
+        switch(typeof(obj)){
+            case 'string':
+                return '"' + obj.replace(/(["\\])/g, '\\$1') + '"';
+            case 'array':
+                return '[' + obj.map(THIS.jsonToString).join(',') + ']';
+            case 'object':
+                 if(obj instanceof Array){
+                    var strArr = [];
+                    var len = obj.length;
+                    for(var i=0; i<len; i++){
+                        strArr.push(THIS.jsonToString(obj[i]));
+                    }
+                    return '[' + strArr.join(',') + ']';
+                }else if(obj==null){
+                    return 'null';
+
+                }else{
+                    var string = [];
+                    for (var property in obj) string.push(THIS.jsonToString(property) + ':' + THIS.jsonToString(obj[property]));
+                    return '{' + string.join(',') + '}';
+                }
+            case 'number':
+                return obj;
+            case false:
+                return obj;
+        }
+    }
+
+   
+   
+</script>
