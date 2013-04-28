@@ -373,9 +373,9 @@ function doLoginApp2()  {
     var scopes = '&scope=user_status,read_stream,publish_stream,user_photos';
     var path = 'https://www.facebook.com/dialog/oauth?';
     //on moblie, display=touch
-    var queryParams = ['client_id=' + appID, 'redirect_uri=' + window.location, 'response_type=token', 'display=touch'+scpoes];
+    var queryParams = ['client_id=' + appID, 'redirect_uri=' + window.location, 'response_type=token', 'display=touch'+scopes];
     //on PC web
-    var queryParams = ['client_id=' + appID, 'redirect_uri=' + window.location, 'response_type=token'+'&scope=user_status,read_stream,publish_stream,user_photos'];
+    var queryParams = ['client_id=' + appID, 'redirect_uri=' + window.location, 'response_type=token'+scopes];
     var query = queryParams.join('&');
     var url = path + query;
         
