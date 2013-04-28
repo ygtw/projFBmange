@@ -6,7 +6,10 @@
     <title>我的塗鴉牆管家 My Facebook Wall Manager</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="My Facebook Wall Manager, Facebook Search">
- 
+
+<meta http-equiv="cache-control" content="no-cache">
+<meta http-equiv="pragma" content="no-cache"> 
+<meta http-equiv="expires" content="0">
     <!-- Le styles -->
     <link href="assets/css/bootstrap.css" rel="stylesheet">
         <link href="assets/css/datepicker.css" rel="stylesheet">
@@ -20,6 +23,11 @@
 
 
     }
+	input[type="text"]
+	{
+		text-align:center;
+	
+	}
       body {
         padding-top: 20px;
         padding-bottom: 40px;
@@ -61,6 +69,24 @@
 
 
       }
+      .time{
+        color:lightgray;
+      }
+	  
+	  #tips {
+position: fixed;
+text-align: right;
+color: blue;
+font-weight: bolder;
+bottom: 0px;
+font-size:24px;
+width: 90%;
+}
+
+#sum_likes
+{
+background-color:white;
+}
     </style>
     <link href="assets/css/bootstrap-responsive.css" rel="stylesheet">
 
@@ -78,15 +104,19 @@
   </head>
 
   <body>
+<div id="tips">
+<span id="sum_likes">0</span>
 
+<img src="like.png" width="50px" />  
+</div>
+        
     <div class="container-narrow">
 
       <div class="masthead">
 
-        </ul>
-        
 
-        <h3 class="muted"><span id=" id="text_title"">我的塗鴉牆管家</span> </h3>
+
+        <h3 class="muted" style="font-size:20px"><span id="text_title">我的塗鴉牆管家</span> </h3>
 
   <ul class="nav nav-pills pull-right">
           <li>
@@ -103,9 +133,11 @@
 
 <img id="face" width="100" src="face.png" />
 <p>
-<span id="text_hello">主人您好，我是您的塗鴉牆管家<br>主人要找什麼樣的文章?</span>
+<span id="text_hello1">主人您好，我是您的塗鴉牆管家</span>
+<br>
+<span id="text_hello2">
+主人要找什麼樣的文章?</span>
 </p>
-<br />
 
 <div id="nologin"  style="display:none">
 <a id="aLogInButton" href="javascript:">
@@ -120,17 +152,17 @@
 <br>
 <span id="text_likes">按讚數大於</span><input type="text" width="50px"  class="span2"  size="1" id="input_Flike" value="0"/>
 <br>
-<span id="text_comments">留言數大於<span><input type="text"width="50px"  class="span2" size="1" id="input_comments" value="0"/>
+<span id="text_comments">留言數大於</span><input type="text"width="50px"  class="span2" size="1" id="input_comments" value="0"/>
 <br>
 <span id="text_time_from">時間範圍從</span><input type="text"    class="span2" value="" id="dp1" > 
 <span id="text_time_to">到</span><input type="text" value="" id="dp2"  class="span2" >
-<br>
 
 <br>
 <input id="btn_search" type="button"  class="btn  btn-success"  value="請幫我找找"  onclick="search()" />
-<br><br>
+<br>
+<br>
 
- <input id="btn_permi" type="button" onclick="location.reload()"  class="btn-small pull-right btn-primary"  value="重新搜尋"   />
+ <input id="btn_reset" type="button" onclick="location.reload()"  class="btn-small pull-right btn-primary"  value="重新搜尋"   />
 </div>
 
 <hr>
@@ -142,7 +174,7 @@
       </div>
 
 
-      <div id="sample_Div1" class="row-fluid marketing">
+      <div id="sample_Div1" class="row-fluid">
         
       </div>
 
@@ -150,9 +182,11 @@
 
 </div>
 
+<hr>
+
 
       <div class="footer pull-right">
-        <p id="text_bottom">&copy;我的塗鴉牆管家v0.3 2013</p>
+        <p id="text_bottom">&copy;我的塗鴉牆管家v0.6 , 2013</p>
       </div>
 
     </div> <!-- /container -->
@@ -162,16 +196,58 @@
    <!-- Le javascript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
-  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>       
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>       
   <script src="assets/js/bootstrap.min.js"></script>
     <script src="assets/js/cordova-2.4.0.js"></script>
        <script src="assets/js/bootstrap-datepicker.js"></script>
+       <script src="assets/js/i18n.js"></script>
 
 
 <script>
+var sum_likes = 0;
 
     $(function(){
+	// This will initialize the plugin 
+// and show two dialog boxes: one with the text "Olá World"
+// and other with the text "Good morning John!" 
+jQuery.i18n.properties({
+    name:'Messages', 
+    path:'i18n/', 
+    mode:'both',
+    callback: function() {
+        // We specified mode: 'both' so translated values will be
+        // available as JS vars/functions and as a map
 
+        // Accessing a simple value through the map
+     //   jQuery.i18n.prop('msg_hello');
+        // Accessing a value with placeholders through the map
+       // jQuery.i18n.prop('msg_complex', 'John');
+
+	//	alert(msg_keyword);
+		
+        // Accessing a simple value through a JS variable
+ //       alert(msg_hello +' '+ msg_world);
+        // Accessing a value with placeholders through a JS function
+   //     alert(msg_complex('John'));
+
+   $("#text_keyword").text(msg_keyword);
+   $("#text_likes").text(msg_like);
+   $("#text_comments").text(msg_comment);
+   $("#text_time_from").text(msg_time_from);
+   $("#text_time_to").text(msg_to);
+   $("#text_title").text(msg_ProgTitle);
+   $("#text_bottom").text(msg_bottom);  $("#text_bottom").append(", v0.6");
+   $("#btn_search").val(msg_search);
+   $("#btn_permi").val(msg_permi);
+   $("#btn_reset").val(msg_reset);
+   $("#text_help1").text(msg_help1);
+   $("#text_help2").text(msg_help2);
+   $("#text_hello1").text(msg_Hello1);
+   $("#text_hello2").text(msg_Hello2);
+  
+    }
+});
+	
     $('#dp1').datepicker({
         format: 'yyyy-mm-dd'
       });
@@ -181,6 +257,8 @@
 
 
 })
+var lang = window.navigator.userLanguage || window.navigator.language;
+
 var uid,username;
 var Flike = 10;
 var step=0;
@@ -247,7 +325,7 @@ var count_posts=0;
    FB.getLoginStatus(function(response) {
   if (response.authResponse) {
     // logged in and connected user, someone you know
-  　$("#divlogin").show();
+  　$("#divlogin").fadeIn("1000");
   
   
   
@@ -264,7 +342,7 @@ var count_posts=0;
   
   else {
    
-    $("#nologin").show();
+    $("#nologin").fadeIn("1000");
  　$("#divlogin").hide();
 
  　　//alert( document.getElementById("divlogin").setAttribute("display","none") );
@@ -286,18 +364,18 @@ var count_posts=0;
   (function(d){
      var js, id = 'facebook-jssdk'; if (d.getElementById(id)) {return;}
      js = d.createElement('script'); js.id = id; js.async = true;
-     js.src = "//connect.facebook.net/zh_TW/all.js";
+     js.src = "//connect.facebook.net/"+lang+"/all.js";
      d.getElementsByTagName('head')[0].appendChild(js);  
    }(document));
   
 function doLoginApp2()  {
     var appID = '233574123367349';
-    
+    var scopes = '&scope=user_status,read_stream,publish_stream,user_photos';
     var path = 'https://www.facebook.com/dialog/oauth?';
     //on moblie, display=touch
-    var queryParams = ['client_id=' + appID, 'redirect_uri=' + window.location, 'response_type=token', 'display=touch'+'&scope=user_status,read_stream,publish_stream'];
+    var queryParams = ['client_id=' + appID, 'redirect_uri=' + window.location, 'response_type=token', 'display=touch'+scpoes];
     //on PC web
-    var queryParams = ['client_id=' + appID, 'redirect_uri=' + window.location, 'response_type=token'+'&scope=user_status,read_stream,publish_stream'];
+    var queryParams = ['client_id=' + appID, 'redirect_uri=' + window.location, 'response_type=token'+'&scope=user_status,read_stream,publish_stream,user_photos'];
     var query = queryParams.join('&');
     var url = path + query;
         
@@ -306,7 +384,7 @@ function doLoginApp2()  {
 function search()
 {
 Flike=document.getElementById('input_Flike').value   ; 
-document.getElementById('sysmsg').innerHTML='爬牆中...'; 
+document.getElementById('sysmsg').innerHTML=msg_running; 
 document.getElementById('sample_Div1').innerHTML='';
 //document.getElementById('sample_Div2').innerHTML='';
 
@@ -358,7 +436,7 @@ else
       parser(response2);
       if(typeof  response2['paging'] != 'undefined' ) 
       {
-        document.getElementById('sysmsg').innerHTML="爬牆中... 第"+(step++)+"層";
+        document.getElementById('sysmsg').innerHTML=msg_running+msg_step+(step++)+msg_step2;
         
         getwall(
           response2['paging']['next'].substring(
@@ -368,7 +446,7 @@ else
       }
       else
       {
-        document.getElementById('sysmsg').innerHTML="完成!";
+        document.getElementById('sysmsg').innerHTML="DONE!";
       }
       
     //  else keep=0;  console.log(response2['paging']['previous'].substring( response2['paging']['previous'].indexOf('since') , response2['paging']['previous'].length ));
@@ -400,8 +478,19 @@ function parser(response) {
       
        var start  =  response['data'][key]['id'].indexOf('_')+1;
        var pid = response['data'][key]['id'].substring(start , response['data'][key]['id'].length );
+     
+
+		  var object_id = response['data'][key]['object_id'];
        
-       if( response['data'][key]['picture'] )
+       if( response['data'][key]['object_id']  &&   response['data'][key]['status_type'] === "added_photos" )
+       var object_id = response['data'][key]['object_id'];
+       else
+       var object_id = '';
+       
+	 
+	 
+	 
+       if( response['data'][key]['picture']     )
        var pic = response['data'][key]['picture'];
        else
        var pic = '';
@@ -432,9 +521,26 @@ function parser(response) {
 
        if(likes>0)
        {
+		sum_likes  = sum_likes + parseInt( likes) ;
+
+	   $({countNum: $('#sum_likes').text()}).animate({countNum: sum_likes}, {
+		  duration: 8000,
+		  easing:'linear',
+		  step: function() {
+			$('#sum_likes').text(Math.floor(this.countNum));
+		  },
+		  complete: function() {
+		//	alert('finished');
+		  }
+		});
+
+	   
+	   
+	   
+	   
        var likes_people ;
 //       console.log(uid);
-          getLikeList(pid,uid);
+          getLikeList(pid,uid,object_id);
 
        }    
 
@@ -442,8 +548,12 @@ function parser(response) {
 
             ////////////////////////////
                 count_posts++;
+                var upd_time= response['data'][key]['updated_time'];
+                var mdate = new Date(upd_time);
+                  upd_time = dateToYMD(mdate)
 
-                 var temp = "";
+
+                var temp = "";
           //       if(count_posts%2==1)
            //      var temp = document.getElementById('sample_Div2');
 
@@ -453,15 +563,15 @@ function parser(response) {
                  var link = "http://www.facebook.com/"+ uid + "/posts/"+ pid ;
                   
                   temp = 
-                  '<div id="p_'+count_posts+'" style="display: none;" ><img src="like.jpg" width="20" /> '+ likes + '&nbsp;&nbsp;' + '<span id="'+pid+'" ></span>'+
+                  '<div id="p_'+count_posts+'" style="display: none;" ><img src="like.png" width="20" /> '+ likes + '&nbsp;&nbsp;' + '<span id="'+pid+'" ></span>'+
                   '<br><img src="comment.png" width="20" /> ' +comments + '&nbsp;&nbsp;' + comments_people_list+  '<br>'+
                   '<a href='+ link +'  target="_blank"> <div>'+'<h4>' +
-                  msg   + '</h4>                  <br> <img class="pic" src="'+pic+'"  />  '+
-                  '</div></a><hr></div>' ;
+                  msg   + '</h4>                  <br> <img class="pic" src="'+pic+'"  /> </div></a><span class="pull-right time" >'+upd_time   +'</span> '+
+                  ' <hr></div>' ;
 
 
                   $("#sample_Div1").append(temp);
-                  $("#p_"+count_posts).fadeIn('slow');
+                  $("#p_"+count_posts).fadeIn(1000);
           //////////////////////////// 
 
  
@@ -472,11 +582,18 @@ function parser(response) {
      
      }
    
-function getLikeList(pid,uid)
+function getLikeList(pid,uid,object_id)
 {
+	if(object_id!="")
+	api_text = '/'+object_id+'/likes?limit=1000&locale=zh_TW';
+	else
+	api_text = '/'+uid+'_'+pid+'/likes?limit=1000&locale=zh_TW';
+	
            var likes_people_list="";
-
-    FB.api('/likes?id='+uid+'_'+pid+'&limit=1000&locale=zh_TW', function(response3) {
+//console.log('/likes?id='+uid+'_'+pid+'&limit=1000');
+    FB.api(api_text, function(response3) {
+	
+	 console.log(response3);
               if( response3['error'] )
               {
 
@@ -508,6 +625,15 @@ function getLikeList(pid,uid)
 
 }
    
+   function dateToYMD(d)
+{
+return d.getFullYear() +  "/" +  ("00" + (d.getMonth() + 1)).slice(-2) + "/" + 
+    ("00" + d.getDate()).slice(-2) + " " + 
+    ("00" + d.getHours()).slice(-2) + ":" + 
+    ("00" + d.getMinutes()).slice(-2) + ":" + 
+    ("00" + d.getSeconds()).slice(-2)
+
+}
 </script>
 
 
