@@ -83,7 +83,12 @@ font-size:24px;
 width: 90%;
 }
 
-#sum_likes
+.pic
+{
+border: 1px solid black;
+}
+
+#sum_likes , #sum_comments
 {
 background-color:white;
 }
@@ -104,10 +109,16 @@ background-color:white;
   </head>
 
   <body>
-<div id="tips">
+<div id="tips" style="padding:10px">
 <span id="sum_likes">0</span>
-
-<img src="like.png" width="50px" />  
+<img style="width:35px"  width="35px"  src="like.png" />  
+&nbsp
+<span id="sum_comments">0</span>
+<img src="comment.png" width="25px" />  
+&nbsp
+<!--
+<img src="share.png" width="50px" />  
+-->
 </div>
         
     <div class="container-narrow">
@@ -154,15 +165,20 @@ background-color:white;
 <br>
 <span id="text_comments">留言數大於</span><input type="text"width="50px"  class="span2" size="1" id="input_comments" value="0"/>
 <br>
-<span id="text_time_from">時間範圍從</span><input type="text"    class="span2" value="" id="dp1" > 
-<span id="text_time_to">到</span><input type="text" value="" id="dp2"  class="span2" >
+<span id="text_time_from">時間範圍從</span>
+<input type="text"    class="span2" value="" id="dp1" > 
+<span id="text_time_to">到
+</span>
+<input type="text" value="" id="dp2"  class="span2" >
 
 <br>
 <input id="btn_search" type="button"  class="btn  btn-success"  value="請幫我找找"  onclick="search()" />
 <br>
+<input id="btn_reset" type="button" onclick="location.reload()"  class="btn btn-primary" style="display:none" value="重新搜尋"   />
+
+<br>
 <br>
 
- <input id="btn_reset" type="button" onclick="location.reload()"  class="btn-small pull-right btn-primary"  value="重新搜尋"   />
 </div>
 
 <hr>
@@ -186,7 +202,7 @@ background-color:white;
 
 
       <div class="footer pull-right">
-        <p id="text_bottom">&copy;我的塗鴉牆管家v0.6 , 2013</p>
+        <p id="text_bottom">&copy;我的塗鴉牆管家v0.7 , 2013</p>
       </div>
 
     </div> <!-- /container -->
@@ -196,7 +212,7 @@ background-color:white;
    <!-- Le javascript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
-  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>       
+  <script src="assets/js/jquery.min.js"></script>       
   <script src="assets/js/bootstrap.min.js"></script>
     <script src="assets/js/cordova-2.4.0.js"></script>
        <script src="assets/js/bootstrap-datepicker.js"></script>
@@ -204,7 +220,8 @@ background-color:white;
 
 
 <script>
-var sum_likes = 0;
+var sum_likes = 1;
+var sum_comments = 0;
 
     $(function(){
 	// This will initialize the plugin 
@@ -236,7 +253,7 @@ jQuery.i18n.properties({
    $("#text_time_from").text(msg_time_from);
    $("#text_time_to").text(msg_to);
    $("#text_title").text(msg_ProgTitle);
-   $("#text_bottom").text(msg_bottom);  $("#text_bottom").append(", v0.6");
+   $("#text_bottom").text(msg_bottom);  $("#text_bottom").append(", v0.7");
    $("#btn_search").val(msg_search);
    $("#btn_permi").val(msg_permi);
    $("#btn_reset").val(msg_reset);
@@ -331,7 +348,7 @@ var count_posts=0;
   
   
     FB.api('/me', function(response) {
-       console.log(response);
+      // console.log(response);
     //   console.log( FBquery( response.id ) );
     uid = response['id'];
     username = response['username'];
@@ -383,6 +400,10 @@ function doLoginApp2()  {
 }  
 function search()
 {
+
+$("#btn_search").hide("fade");
+$("#btn_reset").show("fade");
+
 Flike=document.getElementById('input_Flike').value   ; 
 document.getElementById('sysmsg').innerHTML=msg_running; 
 document.getElementById('sample_Div1').innerHTML='';
@@ -501,6 +522,20 @@ function parser(response) {
       //console.log(pic);
       if(comments>0)
       {
+	   sum_comments = sum_comments + parseInt( comments );
+	      $({countNum: $('#sum_comments').text()}).animate({countNum: sum_comments}, {
+		  duration: 8000,
+		  easing:'linear',
+		  step: function() {
+			$('#sum_comments').text(Math.floor(this.countNum));
+		  },
+		  complete: function() {
+		//	alert('finished');
+		  }
+		});
+	   
+	   
+	   
        var comments_people = response['data'][key]['comments']['data'];
        //console.log(likes_people);
        for (var i = 0, len = comments_people.length ; i < len; i++) {
@@ -563,7 +598,7 @@ function parser(response) {
                  var link = "http://www.facebook.com/"+ uid + "/posts/"+ pid ;
                   
                   temp = 
-                  '<div id="p_'+count_posts+'" style="display: none;" ><img src="like.png" width="20" /> '+ likes + '&nbsp;&nbsp;' + '<span id="'+pid+'" ></span>'+
+                  '<div id="p_'+count_posts+'" style="display: none;" ><img  style="width:20px"  src="like.png" width="20" /> '+ likes + '&nbsp;&nbsp;' + '<span id="'+pid+'" ></span>'+
                   '<br><img src="comment.png" width="20" /> ' +comments + '&nbsp;&nbsp;' + comments_people_list+  '<br>'+
                   '<a href='+ link +'  target="_blank"> <div>'+'<h4>' +
                   msg   + '</h4>                  <br> <img class="pic" src="'+pic+'"  /> </div></a><span class="pull-right time" >'+upd_time   +'</span> '+
@@ -593,11 +628,11 @@ function getLikeList(pid,uid,object_id)
 //console.log('/likes?id='+uid+'_'+pid+'&limit=1000');
     FB.api(api_text, function(response3) {
 	
-	 console.log(response3);
+	 //console.log(response3);
               if( response3['error'] )
               {
 
-                 console.log(pid); 
+//                 console.log(pid); 
          //                      console.log(response3); 
      
               }
