@@ -16,6 +16,12 @@
 
 
     <style type="text/css">
+
+    #detail_results
+    {
+white-space:pre-wrap; 
+word-break:break-all;
+    }
     h4
     {
       color: black;
@@ -23,11 +29,11 @@
 
 
     }
-	input[type="text"]
-	{
-		text-align:center;
-	
-	}
+  input[type="text"]
+  {
+    text-align:center;
+  
+  }
       body {
         padding-top: 20px;
         padding-bottom: 40px;
@@ -72,15 +78,13 @@
       .time{
         color:lightgray;
       }
-	  
-	  #tips {
-position: fixed;
+    
+    #tips {
 text-align: right;
 color: blue;
 font-weight: bolder;
 bottom: 0px;
-font-size:24px;
-width: 90%;
+font-size:medium;
 }
 
 .pic
@@ -90,7 +94,11 @@ border: 1px solid black;
 
 #sum_likes , #sum_comments
 {
-background-color:white;
+}
+
+#sysmsg{
+color: gray;
+font-size: smaller;
 }
     </style>
     <link href="assets/css/bootstrap-responsive.css" rel="stylesheet">
@@ -109,17 +117,39 @@ background-color:white;
   </head>
 
   <body>
-<div id="tips" style="padding:10px">
+
+<div class="navbar navbar-fixed-bottom" style="bottom:0px; position:fixed; ">
+  <div class="navbar-inner">
+
+<div id="tips" style="padding:10px;">
+
+
+<span id="sysmsg">
+
+</span>
+&nbsp;
+&nbsp;
+&nbsp;
+
 <span id="sum_likes">0</span>
-<img style="width:35px"  width="35px"  src="like.png" />  
-&nbsp
+<img style="width:25px"  width="25px"  src="like.png" />  
+&nbsp;
 <span id="sum_comments">0</span>
 <img src="comment.png" width="25px" />  
-&nbsp
+&nbsp;
 <!--
 <img src="share.png" width="50px" />  
 -->
+
+
+
 </div>
+</div>
+
+
+</div>
+    
+
         
     <div class="container-narrow">
 
@@ -127,16 +157,44 @@ background-color:white;
 
 
 
-        <h3 class="muted" style="font-size:20px"><span id="text_title">我的塗鴉牆管家</span> </h3>
+        <h3 class="muted" style="font-size:20px"><span id="text_title">我的塗鴉牆管家</span>
 
-  <ul class="nav nav-pills pull-right">
-          <li>
-            <div class="fb-like" data-href="http://apps.facebook.com/mywallmanager/" data-send="false" data-layout="button_count" data-width="50" data-show-faces="true"></div>
+<!-- Button to trigger modal -->
+<span class="pull-right">
+<a href="#myModal" role="button" class="btn btn-small" data-toggle="modal">About</a>
+ <br>
+  <div class="fb-like" data-href="http://apps.facebook.com/mywallmanager/" data-send="false" data-layout="button_count" data-width="50" data-show-faces="true"></div>
+</span>
+         </h3>
 
-          </li>
-      </div>
+
+<!-- Modal -->
+<div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h3 id="myModalLabel">需要特殊服務嗎?</h3>
+  </div>
+  <div class="modal-body">
+    <p>Facebook很好用，我們每天都在用，但是當有一天我們想要找很久以前發過的一則訊息，卻出乎意料的麻煩！[我的塗鴉牆管家] 是一個Facebook塗鴉牆管理APP，能讓我們快速找到宇整理以前發過的訊息。目前還在測試中，歡迎給予建議，謝謝！
+</p>
+Email: jjlf23015888 [at] gmail.com
+<br>
+    <a href="https://www.facebook.com/appcenter/mywallmanager">FB APP</a> / 
+    <a href="https://play.google.com/store/apps/details?id=ygtw.projfbmange">Android APP</a> / 
+    <a href="https://github.com/ygtw/projFBmange">Source Code</a>
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-primary" onclick="$('#myModal').modal('hide')
+">OK</button>
+  </div>
+</div>
+
 
       <hr>
+
+          
+
+
 
       <div class="jumbotron">
 
@@ -153,7 +211,7 @@ background-color:white;
 <div id="nologin"  style="display:none">
 <a id="aLogInButton" href="javascript:">
 <span id="text_help1">開始使用前，請先</span>
- <input id="btn_permi" type="button"  class="btn-small btn-primary"  value="點我"   />
+ <input id="btn_permi" type="button"  class="btn btn-primary"  value="點我"   />
 <span id="text_help2">授權給管家，才能繼續使用</span> </a>
 </div>
 
@@ -174,7 +232,6 @@ background-color:white;
 <br>
 <input id="btn_search" type="button"  class="btn  btn-success"  value="請幫我找找"  onclick="search()" />
 <br>
-<input id="btn_reset" type="button" onclick="location.reload()"  class="btn btn-primary" style="display:none" value="重新搜尋"   />
 
 <br>
 <br>
@@ -190,24 +247,23 @@ background-color:white;
       </div>
 
 
-      <div id="sample_Div1" class="row-fluid">
+      <div id="detail_results" class="row-fluid">
         
+
       </div>
-
-<div id="sysmsg">
-
-</div>
-
-<hr>
 
 
       <div class="footer pull-right">
-        <p id="text_bottom">&copy;我的塗鴉牆管家v0.7 , 2013</p>
+<input id="btn_reset" type="button" onclick="location.reload()"  class="btn" style="display:none" value="重新搜尋"   />
+<br>
+        <p id="text_bottom">&copy;我的塗鴉牆管家v0.8 , 2013</p>
       </div>
 
     </div> <!-- /container -->
-
-
+<br>
+<br>
+<br>
+<br>
 
    <!-- Le javascript
     ================================================== -->
@@ -220,11 +276,12 @@ background-color:white;
 
 
 <script>
-var sum_likes = 1;
+var sum_likes = 0;
 var sum_comments = 0;
+var DONE = 0;
 
     $(function(){
-	// This will initialize the plugin 
+  // This will initialize the plugin 
 // and show two dialog boxes: one with the text "Olá World"
 // and other with the text "Good morning John!" 
 jQuery.i18n.properties({
@@ -240,8 +297,8 @@ jQuery.i18n.properties({
         // Accessing a value with placeholders through the map
        // jQuery.i18n.prop('msg_complex', 'John');
 
-	//	alert(msg_keyword);
-		
+  //  alert(msg_keyword);
+    
         // Accessing a simple value through a JS variable
  //       alert(msg_hello +' '+ msg_world);
         // Accessing a value with placeholders through a JS function
@@ -253,7 +310,7 @@ jQuery.i18n.properties({
    $("#text_time_from").text(msg_time_from);
    $("#text_time_to").text(msg_to);
    $("#text_title").text(msg_ProgTitle);
-   $("#text_bottom").text(msg_bottom);  $("#text_bottom").append(", v0.7");
+   $("#text_bottom").text(msg_bottom);  $("#text_bottom").append(", v0.8");
    $("#btn_search").val(msg_search);
    $("#btn_permi").val(msg_permi);
    $("#btn_reset").val(msg_reset);
@@ -264,7 +321,7 @@ jQuery.i18n.properties({
   
     }
 });
-	
+  
     $('#dp1').datepicker({
         format: 'yyyy-mm-dd'
       });
@@ -289,7 +346,7 @@ var count_posts=0;
       cookie     : true, // enable cookies to allow the server to access the session
       oauth      : true, // enable OAuth 2.0
       xfbml      : true,  // parse XFBML
-	  
+    
     });
 
     // Additional initialization code here
@@ -387,7 +444,7 @@ var count_posts=0;
   
 function doLoginApp2()  {
     var appID = '233574123367349';
-    var scopes = '&scope=user_status,read_stream,publish_stream,user_photos';
+    var scopes = '&scope=user_status,read_stream,publish_stream,user_photos,status_update';
     var path = 'https://www.facebook.com/dialog/oauth?';
     //on moblie, display=touch
     var queryParams = ['client_id=' + appID, 'redirect_uri=' + window.location, 'response_type=token', 'display=touch'+scopes];
@@ -398,15 +455,60 @@ function doLoginApp2()  {
         
     window.location = url;
 }  
+
+function postToFB()
+{
+$("#btn_share").attr("disabled","disabled");
+
+var FromTo="";
+if( $("#dp1").val() )
+{
+   FromTo = '從 '+ $("#dp1").val() ;
+
+   if ($("#dp2").val()) 
+    {
+        FromTo = FromTo +' 到 '+ $("#dp2").val()
+    }
+    else
+    {
+        FromTo = FromTo +' 到現在 ';
+    }
+}
+
+
+
+console.log(FromTo)
+  var params = {};
+params['message'] = '我的塗鴉牆'+FromTo+'共有 '+sum_likes+' 個讚'+' 和 '+sum_comments+' 個留言!!';
+params['name'] = '我使用塗鴉牆管家 ';
+params['description'] = '你的Facebook好幫手';http://i.imgur.com/cEjithU.png
+params['link'] = 'https://www.facebook.com/appcenter/mywallmanager';
+params['picture'] = 'http://i.imgur.com/cEjithU.png';
+//params['caption'] = 'Caption';
+  
+FB.api('/me/feed', 'post', params, function(response) {
+  if (!response || response.error) {
+  //  alert('Error occured');
+  console.log(response)
+  } else {
+    alert('OK!');
+  }
+});
+}
 function search()
 {
 
-$("#btn_search").hide("fade");
-$("#btn_reset").show("fade");
+// postToFB()
+$("input").attr("disabled","disabled");
+
+
+  $("#btn_reset").show("fade");
+$("#btn_search").val("請稍待")
+$("#btn_reset").removeAttr('disabled');
 
 Flike=document.getElementById('input_Flike').value   ; 
 document.getElementById('sysmsg').innerHTML=msg_running; 
-document.getElementById('sample_Div1').innerHTML='';
+document.getElementById('detail_results').innerHTML='';
 //document.getElementById('sample_Div2').innerHTML='';
 
 step=0;
@@ -467,7 +569,11 @@ else
       }
       else
       {
-        document.getElementById('sysmsg').innerHTML="DONE!";
+        DONE = 1;
+        //done
+        document.getElementById('sysmsg').innerHTML='<input id="btn_share" type="button" onclick="postToFB()"  class="btn btn-success "  value="分享到FB"   />';
+        
+  
       }
       
     //  else keep=0;  console.log(response2['paging']['previous'].substring( response2['paging']['previous'].indexOf('since') , response2['paging']['previous'].length ));
@@ -501,16 +607,16 @@ function parser(response) {
        var pid = response['data'][key]['id'].substring(start , response['data'][key]['id'].length );
      
 
-		  var object_id = response['data'][key]['object_id'];
+      var object_id = response['data'][key]['object_id'];
        
        if( response['data'][key]['object_id']  &&   response['data'][key]['status_type'] === "added_photos" )
        var object_id = response['data'][key]['object_id'];
        else
        var object_id = '';
        
-	 
-	 
-	 
+   
+   
+   
        if( response['data'][key]['picture']     )
        var pic = response['data'][key]['picture'];
        else
@@ -522,29 +628,31 @@ function parser(response) {
       //console.log(pic);
       if(comments>0)
       {
-	   sum_comments = sum_comments + parseInt( comments );
-	      $({countNum: $('#sum_comments').text()}).animate({countNum: sum_comments}, {
-		  duration: 8000,
-		  easing:'linear',
-		  step: function() {
-			$('#sum_comments').text(Math.floor(this.countNum));
-		  },
-		  complete: function() {
-		//	alert('finished');
-		  }
-		});
-	   
-	   
-	   
+     sum_comments = sum_comments + parseInt( comments );
+        $({countNum: $('#sum_comments').text()}).animate({countNum: sum_comments+1}, {
+      duration: 8000,
+      easing:'linear',
+      step: function() {
+      $('#sum_comments').text(Math.floor(this.countNum));
+      },
+      complete: function() {
+
+
+        
+      }
+    });
+     
+     
+     
        var comments_people = response['data'][key]['comments']['data'];
        //console.log(likes_people);
        for (var i = 0, len = comments_people.length ; i < len; i++) {
 //        console.log(likes_people[i]['name']);
          var url= "http://facebook.com/"+comments_people[i]['from']['id'];
          var name= comments_people[i]['from']['name'];
-         comments_people_list = comments_people_list + "<a href='"+url+"' >"+name+"</a>,"
+         comments_people_list = comments_people_list + "<a href='"+url+"' >"+name+"</a>, "
        };
-       comments_people_list = comments_people_list.substr(0 , comments_people_list.length-1); //最後一個逗點
+       comments_people_list = comments_people_list.substr(0 , comments_people_list.length-2); //最後一個逗點
        }
 
 
@@ -556,23 +664,23 @@ function parser(response) {
 
        if(likes>0)
        {
-		sum_likes  = sum_likes + parseInt( likes) ;
+    sum_likes  = sum_likes + parseInt( likes) ;
 
-	   $({countNum: $('#sum_likes').text()}).animate({countNum: sum_likes}, {
-		  duration: 8000,
-		  easing:'linear',
-		  step: function() {
-			$('#sum_likes').text(Math.floor(this.countNum));
-		  },
-		  complete: function() {
-		//	alert('finished');
-		  }
-		});
+     $({countNum: $('#sum_likes').text()}).animate({countNum: sum_likes+1}, {
+      duration: 8000,
+      easing:'linear',
+      step: function() {
+      $('#sum_likes').text(Math.floor(this.countNum));
+      },
+      complete: function() {
+    //  alert('finished');
+      }
+    });
 
-	   
-	   
-	   
-	   
+     
+     
+     
+     
        var likes_people ;
 //       console.log(uid);
           getLikeList(pid,uid,object_id);
@@ -598,14 +706,14 @@ function parser(response) {
                  var link = "http://www.facebook.com/"+ uid + "/posts/"+ pid ;
                   
                   temp = 
-                  '<div id="p_'+count_posts+'" style="display: none;" ><img  style="width:20px"  src="like.png" width="20" /> '+ likes + '&nbsp;&nbsp;' + '<span id="'+pid+'" ></span>'+
+                  '<div id="p_'+count_posts+'" style="display: none;" ><img  style="width:20px"  src="like.png" width="20" /> '+ likes + '&nbsp;&nbsp;' + '<span id="'+pid+'" ></span> <br>'+
                   '<br><img src="comment.png" width="20" /> ' +comments + '&nbsp;&nbsp;' + comments_people_list+  '<br>'+
                   '<a href='+ link +'  target="_blank"> <div>'+'<h4>' +
                   msg   + '</h4>                  <br> <img class="pic" src="'+pic+'"  /> </div></a><span class="pull-right time" >'+upd_time   +'</span> '+
                   ' <hr></div>' ;
 
 
-                  $("#sample_Div1").append(temp);
+                  $("#detail_results").append(temp);
                   $("#p_"+count_posts).fadeIn(1000);
           //////////////////////////// 
 
@@ -619,16 +727,16 @@ function parser(response) {
    
 function getLikeList(pid,uid,object_id)
 {
-	if(object_id!="")
-	api_text = '/'+object_id+'/likes?limit=1000&locale=zh_TW';
-	else
-	api_text = '/'+uid+'_'+pid+'/likes?limit=1000&locale=zh_TW';
-	
+  if(object_id!="")
+  api_text = '/'+object_id+'/likes?limit=1000&locale=zh_TW';
+  else
+  api_text = '/'+uid+'_'+pid+'/likes?limit=1000&locale=zh_TW';
+  
            var likes_people_list="";
 //console.log('/likes?id='+uid+'_'+pid+'&limit=1000');
     FB.api(api_text, function(response3) {
-	
-	 //console.log(response3);
+  
+   //console.log(response3);
               if( response3['error'] )
               {
 
