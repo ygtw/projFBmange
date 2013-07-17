@@ -34,6 +34,19 @@ word-break:break-all;
     text-align:center;
   
   }
+  .Dposts:hover
+  {
+    background: rgb(231, 248, 195);
+    -webkit-tap-highlight-color: rgb(231, 248, 195);
+
+  }
+  .Dposts
+  {
+    padding: 5px;
+    border-radius:10px;
+
+
+  }
       body {
         padding-top: 20px;
         padding-bottom: 40px;
@@ -256,7 +269,7 @@ Email: jjlf23015888 [at] gmail.com
       <div class="footer pull-right">
 <input id="btn_reset" type="button" onclick="location.reload()"  class="btn" style="display:none" value="重新搜尋"   />
 <br>
-        <p id="text_bottom">&copy;我的塗鴉牆管家v0.82 , 2013</p>
+        <p id="text_bottom"><br>&copy;我的塗鴉牆管家v0.9 , 2013</p>
       </div>
 
     </div> <!-- /container -->
@@ -622,7 +635,7 @@ function parser(response) {
        else
        var pic = '';
        
-       var comments = response['data'][key]['comments']['count'];
+       var comments = response['data'][key]['comments']['data'].length;
        var comments_people_list="";
     
       //console.log(pic);
@@ -706,11 +719,16 @@ function parser(response) {
                  var link = "http://www.facebook.com/"+ uid + "/posts/"+ pid ;
                   
                   temp = 
-                  '<div id="p_'+count_posts+'" style="display: none;" ><img  style="width:20px"  src="like.png" width="20" /> '+ likes + '&nbsp;&nbsp;' + '<span id="'+pid+'" ></span> <br>'+
-                  '<br><img src="comment.png" width="20" /> ' +comments + '&nbsp;&nbsp;' + comments_people_list+  '<br>'+
-                  '<a href='+ link +'  target="_blank"> <div>'+'<h4>' +
-                  msg   + '</h4>                  <br> <img class="pic" src="'+pic+'"  /> </div></a><span class="pull-right time" >'+upd_time   +'</span> '+
-                  ' <hr></div>' ;
+                  '<div id="p_'+count_posts+'" class="Dposts" style="display: none;" ><img  style="width:20px"  src="like.png" width="20" /> '+ likes + '&nbsp;&nbsp;' + '<span id="'+pid+'" ></span> <br>'+
+                  '<br><img src="comment.png" width="20" /> ' +comments + '&nbsp;&nbsp;' + comments_people_list+  '<br><br>'+
+                  '<a href='+ link +'  target="_blank">'+
+                  '<div class=""><div class="row-fluid"> <div class="span1">&nbsp</div>'+
+                  '<div class="span3"> <img width="152px" class="pic" src="'+pic+'"  /> </div>'+
+
+
+                  '<div class="span8"> '+'<h4>' +      msg   + '</h4>   </div> </div>   '+
+                  ' </div> </a><span class="pull-right time" >'+upd_time   +'</span> '+
+                  ' </div> ' ;
 
 
                   $("#detail_results").append(temp);
