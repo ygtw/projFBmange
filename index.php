@@ -722,8 +722,8 @@ function parser(response) {
                   '<div id="p_'+count_posts+'" class="Dposts" style="display: none;" ><img  style="width:20px"  src="like.png" width="20" /> '+ likes + '&nbsp;&nbsp;' + '<span id="'+pid+'" ></span> <br>'+
                   '<br><img src="comment.png" width="20" /> ' +comments + '&nbsp;&nbsp;' + comments_people_list+  '<br><br>'+
                   '<a href='+ link +'  target="_blank">'+
-                  '<div class=""><div class="row-fluid"> <div class="span1">&nbsp</div>'+
-                  '<div class="span3"> <img width="152px" class="pic" src="'+pic+'"  /> </div>'+
+                  '<div class=""><div class="row-fluid"> '+
+                  '<div class="span4"> <img width="152px" class="pic" src="'+pic+'"  /> </div>'+
 
 
                   '<div class="span8"> '+'<h4>' +      msg   + '</h4>   </div> </div>   '+
