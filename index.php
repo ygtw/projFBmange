@@ -256,7 +256,7 @@ Email: jjlf23015888 [at] gmail.com
       <div class="footer pull-right">
 <input id="btn_reset" type="button" onclick="location.reload()"  class="btn" style="display:none" value="重新搜尋"   />
 <br>
-        <p id="text_bottom">&copy;我的塗鴉牆管家v0.8 , 2013</p>
+        <p id="text_bottom">&copy;我的塗鴉牆管家v0.82 , 2013</p>
       </div>
 
     </div> <!-- /container -->
