@@ -581,7 +581,9 @@
                         response['data'][key]['message'].indexOf(keyword) == -1 ||
 
                         !response['data'][key]['comments'] ||
-                        response['data'][key]['comments']['count'] < Fcomments
+                        response['data'][key]['comments']['count'] < Fcomments ||
+
+                        response['data'][key]['from']['id'].indexOf(uid)==-1
 
                         /*        ! response['data'][key]['likes']  || 
             response['data'][key]['likes']['count']<Flike 
@@ -690,7 +692,7 @@
                     var link = "http://www.facebook.com/" + uid + "/posts/" + pid;
 
                     temp =
-                        '<div id="p_' + count_posts + '" class="Dposts" style="display: none;" ><img   style="width:20px"  src="like.png" width="20" /> <span id="like_' + pid + '" > '  + likes +  '</span>  &nbsp;&nbsp;' + '<span id="' + pid + '" ></span> <br>' +
+                        '<div id="p_' + pid + '" class="Dposts" style="display: none;" ><img   style="width:20px"  src="like.png" width="20" /> <span id="like_' + pid + '" > '  + likes +  '</span>  &nbsp;&nbsp;' + '<span id="' + pid + '" ></span> <br>' +
                         '<br><img src="comment.png" width="20" /> ' + comments + '&nbsp;&nbsp;' + comments_people_list + '<br><br>' +
                         '<a href=' + link + '  target="_blank">' +
                         '<div class=""><div class="row-fluid"> ' +
@@ -703,7 +705,7 @@
 
 
                     $("#detail_results").append(temp);
-                    $("#p_" + count_posts).fadeIn(1000);
+                    $("#p_" + pid).fadeIn(1000);
                     //////////////////////////// 
 
 
@@ -737,6 +739,8 @@
                     posts_like[my_count_posts] = likes_total_count;
                    // console.log(likes_total_count)
                     $("#like_"+pid).html(likes_total_count);
+
+                    if(likes_total_count < Flike) $("#p_"+pid).html("");
 
 
                     ////// show sum likes animate
